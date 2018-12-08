@@ -11,7 +11,7 @@ UNKNOWN_COLOUR = (255, 0, 0)
 PLAYER_COLOUR = (0, 0, 255)
 
 BLACK = (0, 0, 0)
-DARKEN = (-60, -60, -60)
+DARKEN = (0.3, 0.3, 0.3)
 
 class GameView:
 
@@ -45,7 +45,7 @@ class GameView:
             fill = getTileFill(tile.type)
         elif tile.isDiscovered:
             fill = getTileFill(tile.type)
-            fill = tuple(map(operator.add, fill, DARKEN))
+            fill = tuple(map(operator.mul, fill, DARKEN))
         else:
             fill = BLACK
         pos = self.transformToScreen(tile.position)
