@@ -9,10 +9,10 @@ FONT = pygame.font.SysFont('Papyrus', FONT_SIZE)
 
 class ConsoleView:
 
-    def __init__(self, parentSurface, position):
+    def __init__(self, parentSurface, screenPosition, screenSize):
         self.parentSurface = parentSurface
-        self.position = position
-        self.surface = pygame.Surface((position[2], position[3]))
+        self.screenPosition = screenPosition
+        self.surface = pygame.Surface((screenSize.x, screenSize.y))
 
     def Render(self):
         self.surface.fill((0, 0, 0))
@@ -20,4 +20,4 @@ class ConsoleView:
             message = console.messages[i]
             textsurface = FONT.render(message, True, (255, 255, 255))
             self.surface.blit(textsurface, (10, i*20+10))
-        self.parentSurface.blit(self.surface, self.position)
+        self.parentSurface.blit(self.surface, self.screenPosition.toTuple())

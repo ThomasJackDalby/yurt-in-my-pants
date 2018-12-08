@@ -1,20 +1,29 @@
-
 from game.map import Map
 from game.player import Player
 import console
+import game.map
+import random
 
 class Game:
 
     def __init__(self):
-        self.map = Map(100, 100)
-        self.player = Player(5, 5)
+        self.map = game.map.createRandomMap(4, 4)
+
+        while True:
+            tile = random.choice(self.map.tiles)
+            if not tile.type.isSolid:
+                self.player = Player(tile.position)
+                break
+        
+        console.Write("Player starting at ({}, {})".format(self.player.position.x, self.player.position.y))
 
     def MovePlayer(self, movement):
-        target = (self.player.x, self.player.y) + movement 
-        tile = self.map.GetTile(target[0], target[1])
+        target = self.player.position + movement 
+        if not self.map.limits.contains(target):
+            return
 
+        tile = self.map.getTile(target.x, target.y)
         if tile.type.isSolid:
-            console.Write("Cannot move to {} {}".format(tile.x, tile.y))
+            console.Write("Cannot move to {} {}".format(tile.position.x, tile.position.y))
         else:
-            self.player.x += movement[0]
-            self.player.y += movement[1]
+            self.player.position += movement
